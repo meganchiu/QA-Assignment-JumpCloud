@@ -19,9 +19,9 @@ The assignment is to:
 * When the application is launched, it should wait for http connections.
 * Application should answer only on the `PORT` that was specified in the `PORT` environment variable.
 * The application should support three endpoints:
-  ** `POST` to `/hash` should accept a password.  It should return a job identifier.  It should wait 5 seconds and then calculate the password hash.  The hashing algorithm should be SHA512.
-  ** `GET` to `/hash` should accept a job identifier.  It should return the base64 encoded password hash for the corresponding POST request.
-  ** `GET` to `/stats` does not accept any data.  It should return a JSON data structure for the total hash requests since the server started and average time of a hash request in milliseconds.
+    ** `POST` to `/hash` should accept a password.  It should return a job identifier.  It should wait 5 seconds and then calculate the password hash.  The hashing algorithm should be SHA512.
+    ** `GET` to `/hash` should accept a job identifier.  It should return the base64 encoded password hash for the corresponding POST request.
+    ** `GET` to `/stats` does not accept any data.  It should return a JSON data structure for the total hash requests since the server started and average time of a hash request in milliseconds.
 * Application should be able to process multiple connections simultaneously.  It should support graceful shutdown requests.  This means that it should allow any current requests for password hashing to complete, reject any new requests, and respond with a 200 status code and then shutdown.
 * No new password requests should be allowed when the shutdown is pending.
 
