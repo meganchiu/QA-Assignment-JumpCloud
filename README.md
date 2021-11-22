@@ -13,7 +13,11 @@ The assignment is to:
 
 ### Password Hashing Application Details
 
--When the application is launched, it should wait for http connections
+* Must specify the PORT environment variable before launching the application
+* When the application is launched, it should wait for http connections
+* Application should answer only on the `PORT` that was specified in the `PORT` environment variable
+* The application should support three endpoints:
+** Test
 
 ### Sample Curl Request and Responses
 
