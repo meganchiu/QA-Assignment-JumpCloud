@@ -1,5 +1,7 @@
 # QA-Assignment-JumpCloud
 
+---
+
 ### Assignment Details
 
 JumpCloud has implemented a password hashing application in Golang and have intentionally left bugs in the application.  
@@ -11,7 +13,7 @@ The assignment is to:
 * Report any bugs found
 * Consider implementing automated tests as well
 
-<br/>
+---
 
 ### Password Hashing Application Details
 
@@ -25,7 +27,7 @@ The assignment is to:
 * Application should be able to process multiple connections simultaneously.  It should support graceful shutdown requests.  This means that it should allow any current requests for password hashing to complete, reject any new requests, and respond with a 200 status code and then shutdown.
 * No new password requests should be allowed when the shutdown is pending.
 
-<br/>
+---
 
 ### Sample Curl Request and Responses
 
