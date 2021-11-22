@@ -1,7 +1,5 @@
 # QA-Assignment-JumpCloud
 
----
-
 ### Assignment Details
 
 JumpCloud has implemented a password hashing application in Golang and have intentionally left bugs in the application.  
