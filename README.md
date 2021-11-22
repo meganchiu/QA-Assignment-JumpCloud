@@ -1,5 +1,20 @@
 # QA-Assignment-JumpCloud
 
+### Assignment Details
+
+JumpCloud has implemented a password hashing application in Golang and have intentionally left bugs in the application.  
+
+The assignment is to:
+* Write the test cases needed to test the application
+* Explain your choices for test coverage
+* Execute test cases
+* Report any bugs found
+* Consider implementing automated tests as well
+
+### Password Hashing Application Details
+
+-When the application is launched, it should wait for http connections
+
 ### Sample Curl Request and Responses
 
 #### Post to the /hash endpoint
