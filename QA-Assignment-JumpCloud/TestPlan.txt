@@ -1,0 +1,175 @@
+Test Plan for QA Assignment - JumpCloud
+
+TEST CASE NAME: POST Request to the Password Hash Endpoint is successful
+DESCRIPTION: When a POST Request is made to the Password Hash Endpoint using a valid value for the password key, the request is successful.  A job identifier is returned after the request is made.
+TEST DATA SET UP: {"password": "[Password That Will Be Hashed]"}
+EXPECTED RESULT: Job identifier should be returned in the response.
+TEST STEPS:
+1. Submit a POST Request to the Password Hash Endpoint - http://127.0.0.1:8088/hash
+2. JSON body to be included in Step 1- {"password": "[Password That Will Be Hashed]"}
+
+
+TEST CASE NAME: When POST Request to the Password Hash Endpoint is made, the password hash is encoded correctly
+DESCRIPTION: When a POST Request is made to the Password Hash Endpoint using a valid value for the password key, the password hash is encoded correctly.
+TEST DATA SET UP: {"password": "[Password That Will Be Hashed]"}
+EXPECTED RESULT:  A job identifier is returned in the response.  The password hash is encoded correctly.
+TEST STEPS:
+1. Submit a POST Request to the Password Hash Endpoint - http://127.0.0.1:8088/hash
+2. JSON body to be included in Step 1- {"password": "[Password That Will Be Hashed]"}
+
+
+TEST CASE NAME: POST Request to the Password Hash Endpoint using empty string value for password
+DESCRIPTION:  When a POST Request is made to the Password Hash Endpoint using an empty string value for the password key, the request is unsuccessul.
+TEST DATA SET UP: {"password": ""}
+EXPECTED RESULT: Error message is returned in the response indicating that the value for password cannot be empty in the request.
+TEST STEPS:
+1. Submit a POST Request to the Password Hash Endpoint - http://127.0.0.1:8088/hash
+2. JSON body to be included in Step 1 - {"password": ""}
+
+
+TEST CASE NAME: POST Request to the Password Hash Endpoint using null value for password
+DESCRIPTION: When a POST Request is made to the Password Hash Endpoint using a null value for the password key, the request is unsuccessul.
+TEST DATA SET UP: {"password": null}
+EXPECTED RESULT: Error message is returned in the response indi ating that the value for password cannot be null in the request.
+TEST STEPS:
+1. Submit a POST Request to the Password Hash Endpoint - http://127.0.0.1:8088/hash
+2. JSON body to be included in Step 1 - {"password": null}
+
+
+TEST CASE NAME: POST Request to the Password Hash Endpoint using a malformed JSON in the request
+DESCRIPTION: When a POST Request is made to the Password Hash Endpoint using a malformed JSON, then the request is unsuccessful.
+TEST DATA SET UP: "password"
+EXPECTED RESULT: Error message is returned in the response indicating that the input in the request is malformed.
+TEST STEPS:
+1. Submit a POST Request to the Password Hash Endpoint - http://127.0.0.1:8088/hash
+2. JSON body to be included in Step 1 - {"password"}
+
+
+TEST CASE NAME: POST Request to the Password Hash Endpoint using a different key other than password key
+DESCRIPTION: When a POST Request is made to the Password Hash Endpoint using a different key other than the "password" key, then the request is unsuccessful.
+TEST DATA SET UP: {"random": null}
+EXPECTED RESULT: Error message is returned in the response indicating that the request is invalid.
+TEST STEPS:
+1. Submit a POST Request to the Password Hash Endpoint - http://127.0.0.1:8088/hash
+2. JSON body to be included in Step 1- {"random": "[Password That Will Be Hashed]"}
+
+
+TEST CASE NAME: GET Request to the Password Hash Endpoint using a valid job identifier
+DESCRIPTION: When a GET Request to the Password Hash Endpoint is made using a valid job identifier, the request is successful.
+TEST DATA SET UP: Job Identifier = 1
+EXPECTED RESULT: Base 64 encoded password hash is returned in the response.
+TEST STEPS:
+1. Submit a POST Request to the Password Hash Endpoint - http://127.0.0.1:8088/hash 
+2. JSON body to be included in Step 1- {"password": "[Password That Will Be Hashed]"}
+3. Verify a job identifier is returned from the POST Request in Step 1.
+4. Submit a GET Request to the Password Hash Endpoint - http://127.0.0.1:8088/hash - using the job identifier returned in Step 3.
+5. Base 64 encoded password hash is returned in the response.
+
+
+TEST CASE NAME: GET Request to the Password Hash Endpoint using an unknown job identifier
+DESCRIPTION: When a GET Request to the Password Hash Endpoint is made using an unknown job identifier (that has never been returned before), the request is unsuccessful.
+TEST DATA SET UP: Job Identifier = 99999 (use a job identifier that has not been returned before)
+EXPECTED RESULT: Error message is returned indicating that the hash is not found.
+TEST STEPS:
+1. Submit a GET Request to the Password Hash Endpoint - http://127.0.0.1:8088/hash - using a job identifier that has not been returned before.
+2. Error message is returned indicating that the hash is not found.
+
+
+TEST CASE NAME: GET Request to the Password Hash Endpoint using an invalid job identifier
+DESCRIPTION: When a GET Request to the Password Hash Endpoint is made using an invalid job identifier (such as a string "abc"), the request is unsuccessful.
+TEST DATA SET UP: Job Identifier = 99999 (use a job identifier that has not been returned before)
+EXPECTED RESULT: Error message is returned indicating that the request contained invalid syntax.
+TEST STEPS:
+1. Submit a GET Request to the Password Hash Endpoint - http://127.0.0.1:8088/hash - using a job identifier that is invalid (such as string "abc")
+2. Error message is returned indicating that the request contained invalid syntax.
+
+
+TEST CASE NAME: GET Request to the Password Hash Endpoint without passing in a job identifier
+DESCRIPTION: When a GET Request to the Password Hash Endpoint is made without including a job identifier, the request is unsuccessful.
+TEST DATA SET UP: n/a
+EXPECTED RESULT: Error message is returned indicating that a job identifier must be included in the request.
+TEST STEPS:
+1. Submit a GET Request to the Password Hash Endpoint - http://127.0.0.1:8088/hash - with no job identifier included in the request.
+2. Error message is returned indicating that a job identifier must be included in the request.
+
+
+TEST CASE NAME: Multiple GET Requests made to the Password Hash Endpoint simultaneously is successful
+DESCRIPTION: When multiple GET Requests are made to the Password Hash Endpoint using valid job identifiers, the requests are successful.
+TEST DATA SET UP: n/a
+EXPECTED RESULT: All requests that are made simultaneously will be successful and return job identifiers respectively.
+TEST STEPS:
+1. Submit multiple GET Requests to the Password Hash Endpoint simultaneously. See Step 2 for example.
+2. curl -X POST -H "application/json" -d '{"password":"one"}' http://127.0.0.1:8088/hash & curl -X POST -H "application/json" -d '{"password":"two"}' http://127.0.0.1:8088/hash & curl -X POST -H "application/json" -d '{"password":"three"}' http://127.0.0.1:8088/hash
+3. All requests should are successful and return job identifiers.
+
+
+TEST CASE NAME: GET Request to the Stats Endpoint is successful
+DESCRIPTION: When a GET Request to the Stats endpoint is made, the request is successful.
+TEST DATA SET UP: n/a
+EXPECTED RESULT: The response returned is in JSON format and includes the total number of password hash requests and average time for all requests.
+TEST STEPS:
+1. Submit a GET Request to the Stats Endpoint - http://127.0.0.1:8088/stats
+2. JSON data structure is returned in response and contains both total hash requests and average time of hash requests in milliseconds.
+
+
+TEST CASE NAME: GET Request to the Stats Endpoint returns correct total number of password hash requests
+DESCRIPTION: After multiple password hash requests have been called, when a GET Request to the Stats Endpoint is made, then the correct total number of password hash requests is returned.
+TEST DATA SET UP: n/a
+EXPECTED RESULT: The total number of password hash requests is calculated correctly.
+TEST STEPS:
+1. Launch the password hashing application.
+2. Submit [X] amount of POST Requests to the Password Hash Endpoint - http://127.0.0.1:8088/hash for different passwords to be hashed.
+3. Submit a GET Request to the Stats Endpoint - http://127.0.0.1:8088/stats
+4. JSON data structure is returned in the response and total hash requests corresponds to [X] value in Step 2.
+
+
+TEST CASE NAME: GET Request to the Stats Endpoint returns the correct average time for all password hash requests
+DESCRIPTION: After multiple password hash requests have been called, when a GET Request to the Stats Endpoint is made, then the average time for all hash requests is correctly calculated and returned.
+TEST DATA SET UP: n/a
+EXPECTED RESULT: The average time for all password hash requests is correctly calculated and returned.
+TEST STEPS:
+1. Launch the password hashing application.
+2. Submit [X] amount of POST Requests to the Password Hash Endpoint - http://127.0.0.1:8088/hash for different passwords to be hashed.
+3. Submit a GET Request to the Stats Endpoint - http://127.0.0.1:8088/stats
+4. JSON data structure is returned in the response and the average time returned for password hash calculations is correct.
+
+
+TEST CASE NAME: GET Request to the Stats Endpoint when including unnecessary parameters
+DESCRIPTION: When a GET Request to the Stats Endpoint is made using unnecessary parameters, the request is unsuccessful.
+TEST DATA SET UP:
+EXPECTED RESULT:
+TEST STEPS:
+1. Submit a GET Request to the Stats Endpoint using unnecessary parameters - http://127.0.0.1:8088/stats?param1=value1
+2. Error messsage is returned indicating that the request was unsuccessful.
+
+
+TEST CASE NAME: POST Request to the Stats Endpoint is unsuccessful
+DESCRIPTION: POST Request to the Stats Endpoint is not supported.  When a POST Request to the Stats Endpoint is made, the request is unsuccessful.
+TEST DATA SET UP: n/a
+EXPECTED RESULT: Error message is returned indicating that the request is not supported.
+TEST STEPS:
+1. Submit a POST Request to the Stats endpoint - http://127.0.0.1:8088/stats
+2. Error message is returned indicating that the request is not supported.
+
+
+TEST CASE NAME: POST Request to the Password Hash Endpoint to shutdown does not allow for any new password hash requests
+DESCRIPTION: When a POST Request to the Password Hash Endpoint is made to shutdown the application, then any new password hash requests that are made will not be accepted.
+TEST DATA SET UP: n/a
+EXPECTED RESULT: Any new password hash requests that are made after shutdown is initiated will be rejected.
+TEST STEPS:
+1. Launch the password hashing application.
+2. Submit a POST Request to the Password Hash Endpoint to initiate shutdown of the application.
+3. Submit a POST Request to the Password Hash Endpoint - http://127.0.0.1:8088/hash.
+4. Error message should be returned indicated that the connection was refused.
+
+
+TEST CASE NAME: POST Request to the Password Hash Endpoint to shutdown will allow any existing password hashing requests to complete.
+DESCRIPTION: When a POST Request to the Password Hash Endpoint is made to shutdown the application, any existing password hashing requests should be allowed to complete.
+TEST DATA SET UP: n/a
+EXPECTED RESULT: Any existing password hash requests that are made after shutdown is initiated will be allowed to complete.
+TEST STEPS:
+1. Launch the password hashing application.
+2. Submit a POST Request to the Password Hash Endpoint - http://127.0.0.1:8088/hash.
+3. Immediately submit a POST Request to the Password Hash Endpoint to initiate shutdown of the application.
+4. POST Request to the Password Hash Endpoint to initiate shutdown of the application is successful.
+5. The existing password hash request made in Step 2 will be allowed to complete.
