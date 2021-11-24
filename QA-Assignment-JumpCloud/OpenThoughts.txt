@@ -1,0 +1,19 @@
+Open Thoughts for QA Assignment - JumpCloud
+
+-Both manual and automated test execution was completed
+
+Regarding automation:
+- At first I was unsure on how to make HTTP requests at first.  Did some research first on this website before writing the tests.  
+- https://www.geeksforgeeks.org/get-post-requests-using-python/
+- Was not sure how to implement tests for the following:
+	-Simultaneous GET requests to Hash Endpoint
+	-Simultaneous POST requests to Hash Endpoint
+	-Test to determine if average time was calculated correctly
+-Needed more time to finish writing automation tests for the following:
+	-When shutdown is initiated, then no new requests should be allowed.
+	-Allow for open password hash requests to complete while shutdown is initiated.
+
+
+-Would have liked to perform some stress testing to see how the application would react to several hash requests at the same time
+
+-Also would have liked more time to update the script so that once automation tests have finished, tests get written to a separate text file with results/output.

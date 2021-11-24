@@ -1,0 +1,33 @@
+Open Defects for QA Assignment - JumpCloud
+
+BUG: Job Identifier is not immediately returned after making a POST Request to the Password Hash Endpoint
+DESCRIPTION: The assignment specified that after making a POST Request to the Password Hash endpoint, a job identifier is returned immediately.  In this case, after making a POST Request to the Password Hash endpoint, it appears to wait 5 seconds before returning a job identifier.
+
+
+BUG: Password Hash is not returned when making a POST Request to the Password Hash Endpoint
+DESCRIPTION: The assignment implied that after a job identifier is returned, it will wait 5 seconds before calculating the password hash.  In this case, after making a POST 
+Request to the Password Hash endpoint, no password hash is returned in the response.
+
+
+BUG: POST Request to the Password Hash Endpoint allows for empty string to be passed for the password key
+DESCRIPTION: When making a POST request to the Password Hash Endpoint and using {"password":""}, it will still return a job identifier.  
+
+
+BUG: POST Request to the Password Hash Endpoint allows for null value to be passed for the password key
+DESCRIPTION: When making a POST request to the Password Hash Endpoint and using {"password":null}, it will still return a job identifier.  
+
+
+BUG: POST Request to the Password Hash Endpoint allows for a key other than "password" key to be used
+DESCRIPTION: When making a POST Request to the Password Hash Endpoint and using {"random":"angrymonkey"} for example, the endpoint will still return a job identifier.
+
+
+BUG: AverageTime in the GET /stats endpoint is calculated incorrectly.
+DESCRIPTION: After making multiple POST Requests to the Password Hash Endpoint in one session, each request did not take more than 5-6 seconds to complete.  However, in the AverageTime attribute of the /stats response, the value is incorrectly reflected.
+
+
+BUG: When making a POST Request to the /stats endpoint, the call succeeds.
+DESCRIPTION: When making a POST Request to the /stats endpoint, it succeeds, when it should not.  The assignment states that it only supports the GET Request to the /stats endpoint.
+
+
+BUG: Empty JSON is allowed in the POST Request to the Password Hash Endpoint
+DESCRIPTION: When making a POST Request to the Password Hash Endpoint using an empty JSON, the call still succeeds and returns a job identifier.

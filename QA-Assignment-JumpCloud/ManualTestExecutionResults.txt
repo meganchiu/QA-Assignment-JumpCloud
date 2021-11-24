@@ -1,0 +1,147 @@
+Manual Test Execution Results for QA Assignment - JumpCloud
+
+TEST CASE NUMBER: 01
+TEST CASE NAME: POST Request to the Password Hash Endpoint is successful
+CURL COMMAND(S): curl -X POST -H "application/json" -d '{"password":"testing12345"}' http://127.0.0.1:8088/hash
+RESULT (PASS/FAIL): FAIL 
+ADDITIONAL NOTES: Job Identifier is not returned immediately after making a POST Request to the Password Hash Endpoint.
+
+
+TEST CASE NUMBER: 02
+TEST CASE NAME: When POST Request to the Password Hash Endpoint is made, the password hash is encoded correctly
+CURL COMMAND(S): curl -X POST -H "application/json" -d '{"password":"testing12345"}' http://127.0.0.1:8088/hash
+RESULT (PASS/FAIL): FAIL 
+ADDITIONAL NOTES: Password hash is not returned in the POST Request to the Password Hash Endpoint.
+
+
+TEST CASE NUMBER: 03
+TEST CASE NAME: POST Request to the Password Hash Endpoint using empty string value for password
+CURL COMMAND(S): curl -X POST -H "application/json" -d '{"password":""}' http://127.0.0.1:8088/hash
+RESULT (PASS/FAIL): FAIL
+ADDITIONAL NOTES: The POST Request to the Password Hash Endpoint allows for an empty string to be submitted for the password key.
+
+
+TEST CASE NUMBER: 04
+TEST CASE NAME: POST Request to the Password Hash Endpoint using null value for password
+CURL COMMAND(S): curl -X POST -H "application/json" -d '{"password":null}' http://127.0.0.1:8088/hash
+RESULT (PASS/FAIL): FAIL
+ADDITIONAL NOTES: The POST Request to the Password Hash Endpoint allows for a null value to be submitted for the password key.
+
+
+TEST CASE NUMBER: 05
+TEST CASE NAME: POST Request to the Password Hash Endpoint using a malformed JSON in the request
+CURL COMMAND(S): curl -X POST -H "application/json" -d '{"password"}' http://127.0.0.1:8088/hash
+RESULT (PASS/FAIL): PASS
+ADDITIONAL NOTES: n/a
+
+
+TEST CASE NUMBER: 06
+TEST CASE NAME: POST Request to the Password Hash Endpoint using a different key other than password key
+CURL COMMAND(S): curl -X POST -H "application/json" -d '{"random":"angrymonkey"}' http://127.0.0.1:8088/hash
+RESULT (PASS/FAIL): FAIL
+ADDITIONAL NOTES: If a key other than "password" key is used, the POST Request to the Password Hash Endpoint will still return a job identifier.
+
+
+TEST CASE NUMBER: 07
+TEST CASE NAME: GET Request to the Password Hash Endpoint using a valid job identifier
+CURL COMMAND(S): curl -H "application/json" http://127.0.0.1:8088/hash/1
+RESULT (PASS/FAIL): PASS
+ADDITIONAL NOTES: n/a
+
+
+TEST CASE NUMBER: 08
+TEST CASE NAME: GET Request to the Password Hash Endpoint using an unknown job identifier
+CURL COMMAND(S): curl -H "application/json" http://127.0.0.1:8088/hash/99999
+RESULT (PASS/FAIL): PASS
+ADDITIONAL NOTES: n/a
+
+
+TEST CASE NUMBER: 09
+TEST CASE NAME: GET Request to the Password Hash Endpoint using an invalid job identifier
+CURL COMMAND(S): curl -H "application/json" http://127.0.0.1:8088/hash/abc
+RESULT (PASS/FAIL): PASS
+ADDITIONAL NOTES: The call to the endpoint fails as expected.
+
+
+TEST CASE NUMBER: 10
+TEST CASE NAME: GET Request to the Password Hash Endpoint without passing in a job identifier
+CURL COMMAND(S): curl -H "application/json" http://127.0.0.1:8088/hash/
+RESULT (PASS/FAIL): PASS
+ADDITIONAL NOTES: The call to the endpoint fails as expected, but the error message returned in the response can be more specific to indicate that no job identifier was passed.
+
+
+TEST CASE NUMBER: 11
+TEST CASE NAME: Multiple GET Requests made to the Password Hash Endpoint simultaneously is successful
+CURL COMMAND(S): curl -H "application/json" http://127.0.0.1:8088/hash/1 & curl -H "application/json" http://127.0.0.1:8088/hash/2 & curl -H "application/json" http://127.0.0.1:8088/hash/3
+RESULT (PASS/FAIL): PASS
+ADDITIONAL NOTES: In the response, it appears that it does not return a password hash for each curl command that was submitted.
+
+
+TEST CASE NUMBER: 12
+TEST CASE NAME: GET Request to the Stats Endpoint is successful
+CURL COMMAND(S): curl http://127.0.0.1:8088/stats 
+RESULT (PASS/FAIL): PASS
+ADDITIONAL NOTES: n/a
+
+
+TEST CASE NUMBER: 13
+TEST CASE NAME: GET Request to the Stats Endpoint returns correct total number of password hash requests
+CURL COMMAND(S): curl http://127.0.0.1:8088/stats 
+RESULT (PASS/FAIL): PASS
+ADDITIONAL NOTES: n/a
+
+
+TEST CASE NUMBER: 14
+TEST CASE NAME: GET Request to the Stats Endpoint returns the correct average time for all password hash requests
+CURL COMMAND(S): curl http://127.0.0.1:8088/stats 
+RESULT (PASS/FAIL): FAIL
+ADDITIONAL NOTES: The AverageTime returned in the JSON response is not accurate.  For example, in one session of testing, it returned 321103 milliseconds, which corresponds to ~321 seconds.  Each individual POST Request made in that session did not take more than 6-7 seconds to complete.
+
+
+TEST CASE NUMBER: 15
+TEST CASE NAME: GET Request to the Stats Endpoint does not return anything when no password hash requets have been made yet
+CURL COMMAND(S): curl http://127.0.0.1:8088/stats
+RESULT (PASS/FAIL): PASS
+ADDITIONAL NOTES: n/a
+
+
+TEST CASE NUMBER: 16
+TEST CASE NAME: GET Request to the Stats Endpoint when including unnecessary parameters
+CURL COMMAND(S): curl http://127.0.0.1:8088/stats?param1=value1
+RESULT (PASS/FAIL): PASS
+ADDITIONAL NOTES: The request does not succeed, as expected.  However, I think that the error message being shown to the user can be more specific.
+
+
+TEST CASE NUMBER: 17
+TEST CASE NAME: POST Request to the Stats Endpoint is unsuccessful
+CURL COMMAND(S): curl -X POST -H "application/json" http://127.0.0.1:8088/stats
+RESULT (PASS/FAIL): FAIL
+ADDITIONAL NOTES: The endpoint succeeds when making a POST request to the stats endpoint.
+
+
+TEST CASE NUMBER: 18
+TEST CASE NAME: POST Request to the Password Hash Endpoint to shutdown does not allow for any new password hash requests
+CURL COMMAND(S): curl -X POST -d 'shutdown' http://127.0.0.1:8088/hash
+RESULT (PASS/FAIL): PASS
+ADDITIONAL NOTES: n/a
+
+
+TEST CASE NUMBER: 19
+TEST CASE NAME: POST Request to the Password Hash Endpoint to shutdown will allow any existing password hashing requests to complete.
+CURL COMMAND(S): curl -X POST -d 'shutdown' http://127.0.0.1:8088/hash
+RESULT (PASS/FAIL): PASS
+ADDITIONAL NOTES: n/a
+
+
+TEST CASE NUMBER: 20
+TEST CASE NAME: Multiple POST Requests made to the Password Hash Endpoint simultaneously is successful
+CURL COMMAND(S): curl -X POST -H "application/json" -d '{"password":"one"}' http://127.0.0.1:8088/hash & curl -X POST -H "application/json" -d '{"password":"two"}' http://127.0.0.1:8088/hash & curl -X POST -H "application/json" -d '{"password":"three"}' http://127.0.0.1:8088/hash 
+RESULT (PASS/FAIL): PASS
+ADDITIONAL NOTES: n/a
+
+
+TEST CASE NUMBER: 21
+TEST CASE NAME: POST Request to the Password Hash Endpoint is unsuccessful when empty JSON is used
+CURL COMMAND(S): curl -X POST -H "application/json" -d '{}' http://127.0.0.1:8088/hash
+RESULT (PASS/FAIL): FAIL
+ADDITIONAL NOTES: The request succeeds, even though it should not.
