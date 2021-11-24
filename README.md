@@ -31,7 +31,7 @@ The assignment is to:
 
 #### Post to the /hash endpoint
 ```
-curl -X POST -H "application/json" -d '{"password":"angrymonkey"}' http://127.0.0.1:8088/hash 
+curl -X POST -H "application/json" -d '{"password":"angrymonkey"}' http://127.0.0.1:8088/hash
 ```
 Output:
 > 42
@@ -55,7 +55,7 @@ Output:
 
 #### Shutdown the application
 ```
-curl -X POST -d 'shutdown' http://127.0.0.1:8088/hash 
+curl -X POST -d 'shutdown' http://127.0.0.1:8088/hash
 ```
 Output:
 > 200 Empty Response 
