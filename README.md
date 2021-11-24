@@ -31,7 +31,7 @@ The assignment is to:
 
 Automation Execution was run on Mac OS computer.
 
-* Set the POST variable to `8088
+* Set the POST environment variable to `8088`.
 * Launch the broken-hashserve_darwin application.
 * Navigate to folder containing AutomationTestExecution.py
 * Run the `python AutomationTestExecution.py` command.
