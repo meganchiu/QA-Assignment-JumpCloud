@@ -27,6 +27,16 @@ The assignment is to:
 
 ---
 
+### Automation Execution
+
+Automation Execution was run on Mac OS computer.
+
+* Launch the broken-hashserve_darwin application.
+* Navigate to folder containing AutomationTestExecution.py
+* Run the `python AutomationTestExecution.py` command.
+
+---
+
 ### Sample Curl Request and Responses
 
 #### Post to the /hash endpoint
